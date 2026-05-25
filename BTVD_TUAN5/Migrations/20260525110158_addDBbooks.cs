@@ -1,11 +1,15 @@
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace BTVD_TUAN5.Migrations
 {
-    public partial class KhoiTaoBookDB : Migration
+    /// <inheritdoc />
+    public partial class addDBbooks : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -29,7 +33,7 @@ namespace BTVD_TUAN5.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Author = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     ImageFileName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     TopicId = table.Column<int>(type: "int", nullable: false)
@@ -72,6 +76,7 @@ namespace BTVD_TUAN5.Migrations
                 column: "TopicId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
