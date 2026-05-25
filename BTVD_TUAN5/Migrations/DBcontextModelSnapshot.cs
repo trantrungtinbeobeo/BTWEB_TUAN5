@@ -2,8 +2,6 @@
 using BTVD_TUAN5.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
@@ -19,65 +17,85 @@ namespace BTVD_TUAN5.Migrations
                 .HasAnnotation("ProductVersion", "8.0.27")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("BTVD_TUAN5.Models.Grade", b =>
+            modelBuilder.Entity("BTVD_TUAN5.Models.Book", b =>
                 {
-                    b.Property<int>("grade")
+                    b.Property<int>("BookId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("grade"));
-
-                    b.Property<string>("Gradename")
+                    b.Property<string>("Author")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
 
-                    b.HasKey("grade");
+                    b.Property<string>("ImageFileName")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
-                    b.ToTable("Grades");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("TopicId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookId");
+
+                    b.HasIndex("TopicId");
+
+                    b.ToTable("Books");
+
+                    b.HasData(
+                        new { BookId = 1, Author = "Nguyễn A", ImageFileName = "song-tich-cuc.jpg", Price = 99000m, Quantity = 5, Title = "Sống tích cực", TopicId = 1 },
+                        new { BookId = 2, Author = "Trần B", ImageFileName = "ky-nang-giao-tiep.jpg", Price = 120000m, Quantity = 3, Title = "Kỹ năng giao tiếp", TopicId = 1 },
+                        new { BookId = 3, Author = "Lê C", ImageFileName = "aspnet-core.jpg", Price = 200000m, Quantity = 6, Title = "ASP.NET Core cơ bản", TopicId = 2 },
+                        new { BookId = 4, Author = "Phạm D", ImageFileName = "csharp-nang-cao.jpg", Price = 250000m, Quantity = 4, Title = "C# nâng cao", TopicId = 2 }
+                    );
                 });
 
-            modelBuilder.Entity("BTVD_TUAN5.Models.Student", b =>
+            modelBuilder.Entity("BTVD_TUAN5.Models.Topic", b =>
                 {
-                    b.Property<int>("studentid")
+                    b.Property<int>("TopicId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("studentid"));
-
-                    b.Property<string>("fristname")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("gradeid")
-                        .HasColumnType("int");
+                    b.HasKey("TopicId");
 
-                    b.Property<string>("lastname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.ToTable("Topics");
 
-                    b.HasKey("studentid");
-
-                    b.HasIndex("gradeid");
-
-                    b.ToTable("Students");
+                    b.HasData(
+                        new { TopicId = 1, Name = "Cuộc sống" },
+                        new { TopicId = 2, Name = "Lập trình" },
+                        new { TopicId = 3, Name = "Sức khỏe" }
+                    );
                 });
 
-            modelBuilder.Entity("BTVD_TUAN5.Models.Student", b =>
+            modelBuilder.Entity("BTVD_TUAN5.Models.Book", b =>
                 {
-                    b.HasOne("BTVD_TUAN5.Models.Grade", "grade")
-                        .WithMany("Students")
-                        .HasForeignKey("gradeid")
+                    b.HasOne("BTVD_TUAN5.Models.Topic", "Topic")
+                        .WithMany("Books")
+                        .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("grade");
+                    b.Navigation("Topic");
                 });
 
-            modelBuilder.Entity("BTVD_TUAN5.Models.Grade", b =>
+            modelBuilder.Entity("BTVD_TUAN5.Models.Topic", b =>
                 {
-                    b.Navigation("Students");
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

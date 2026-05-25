@@ -1,0 +1,33 @@
+@model BTVD_TUAN5.Models.Book
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="mb-3">
+    <label asp-for="Title" class="form-label"></label>
+    <input asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Author" class="form-label"></label>
+    <input asp-for="Author" class="form-control" />
+    <span asp-validation-for="Author" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Price" class="form-label"></label>
+    <input asp-for="Price" class="form-control" />
+    <span asp-validation-for="Price" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="Quantity" class="form-label"></label>
+    <input asp-for="Quantity" class="form-control" />
+    <span asp-validation-for="Quantity" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="ImageFileName" class="form-label">Tên file ảnh</label>
+    <input asp-for="ImageFileName" class="form-control" />
+    <span asp-validation-for="ImageFileName" class="text-danger"></span>
+</div>
+<div class="mb-3">
+    <label asp-for="TopicId" class="form-label">Chủ đề</label>
+    <select asp-for="TopicId" class="form-select" asp-items="ViewBag.TopicId"></select>
+    <span asp-validation-for="TopicId" class="text-danger"></span>
+</div>

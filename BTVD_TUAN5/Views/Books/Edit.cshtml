@@ -1,0 +1,10 @@
+@model BTVD_TUAN5.Models.Book
+@{ ViewData["Title"] = "Sửa sách"; }
+<h1>Sửa sách</h1>
+<form asp-action="Edit">
+    <input type="hidden" asp-for="BookId" />
+    <partial name="_Form" model="Model" />
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
