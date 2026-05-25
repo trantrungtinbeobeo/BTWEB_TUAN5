@@ -15,6 +15,10 @@ public class DBcontext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Book>()
+            .Property(b => b.Price)
+            .HasPrecision(18, 2);
+
         modelBuilder.Entity<Topic>().HasData(
             new Topic { TopicId = 1, Name = "Cuộc sống" },
             new Topic { TopicId = 2, Name = "Lập trình" },
