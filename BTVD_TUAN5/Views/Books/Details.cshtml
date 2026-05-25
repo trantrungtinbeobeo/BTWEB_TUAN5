@@ -23,8 +23,8 @@
             <div><span>Tồn kho</span><strong>@Model.Quantity cuốn</strong></div>
         </div>
         <div class="d-flex gap-2 mt-3">
-            <a asp-action="Edit" asp-route-id="@Model.BookId" class="btn btn-gradient">Sửa thông tin</a>
-            <a asp-action="Index" class="btn btn-outline-light">Quay lại cửa hàng</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">Về quản lý sách</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Về trang mua sách</a>
         </div>
     </div>
 </section>

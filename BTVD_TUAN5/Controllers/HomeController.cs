@@ -1,21 +1,30 @@
 using System.Diagnostics;
 using BTVD_TUAN5.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BTVD_TUAN5.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DBcontext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DBcontext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var books = await _context.Books
+                .AsNoTracking()
+                .Include(b => b.Topic)
+                .OrderBy(b => b.Title)
+                .ToListAsync();
+
+            return View(books);
         }
 
         public IActionResult Privacy()

@@ -1,4 +1,43 @@
-<div class="text-center">
-    <h1 class="display-5">Hệ thống quản lý sách</h1>
-    <p>Vào trang <a asp-controller="Books" asp-action="Index">Danh sách sách</a> để thêm/xóa/sửa/chi tiết.</p>
+@model IEnumerable<BTVD_TUAN5.Models.Book>
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<section class="hero-simple mb-4">
+    <h1>Nhà sách online</h1>
+    <p>Chọn số lượng và bấm mua nhanh. Bấm vào sản phẩm để xem chi tiết.</p>
+</section>
+
+<div class="book-grid shop-grid">
+    @foreach (var item in Model)
+    {
+        <article class="book-card light-card">
+            <a class="book-card-link" asp-controller="Books" asp-action="Details" asp-route-id="@item.BookId">
+                <div class="book-cover-square">
+                    @if (!string.IsNullOrEmpty(item.ImageFileName))
+                    {
+                        <img src="~/Content/ImageBooks/@item.ImageFileName" alt="@item.Title" />
+                    }
+                    else
+                    {
+                        <span class="placeholder-cover">BOOK</span>
+                    }
+                </div>
+                <div class="book-content">
+                    <h3>@item.Title</h3>
+                    <p class="author">@item.Author</p>
+                    <p class="meta">@item.Topic?.Name</p>
+                    <div class="book-bottom">
+                        <strong>@item.Price.ToString("N0") đ</strong>
+                        <span>Còn @item.Quantity</span>
+                    </div>
+                </div>
+            </a>
+            <div class="buy-box">
+                <label for="qty-@item.BookId">Số lượng</label>
+                <input id="qty-@item.BookId" type="number" class="form-control" min="1" max="@item.Quantity" value="1" />
+                <button type="button" class="btn btn-buy" onclick="bookShop.buy('@item.Title','qty-@item.BookId')">Mua sách</button>
+            </div>
+        </article>
+    }
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BookVerse</title>
+    <title>@ViewData["Title"] - BookStore</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -11,38 +11,30 @@
 </head>
 <body>
     <header class="site-header sticky-top">
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg bg-white border-bottom">
             <div class="container">
-                <a class="navbar-brand brand-mark" asp-controller="Books" asp-action="Index">📚 BookVerse</a>
+                <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">📚 BookStore</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="mainNav">
-                    <ul class="navbar-nav ms-auto gap-lg-2">
-                        <li class="nav-item"><a class="nav-link" asp-controller="Books" asp-action="Index">Cửa hàng sách</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Books" asp-action="Create">Thêm sách</a></li>
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Books" asp-action="Index">Quản lý sách (Thêm/Sửa/Xóa)</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-4 pt-3">@RenderBody()</main>
+    <div class="container py-4">
+        <main role="main">@RenderBody()</main>
     </div>
 
-    <footer class="site-footer mt-5">
-        <div class="container py-4 d-flex flex-column flex-md-row justify-content-between gap-3">
-            <div>
-                <h5 class="mb-1">BookVerse</h5>
-                <p class="mb-0 text-light-emphasis">Không gian sách hiện đại - đọc là chill.</p>
-            </div>
-            <div class="footer-links">
-                <a asp-controller="Books" asp-action="Index">Sản phẩm</a>
-                <a asp-controller="Books" asp-action="Create">Quản trị kho</a>
-                <a asp-controller="Home" asp-action="Privacy">Chính sách</a>
-            </div>
+    <footer class="site-footer border-top bg-white">
+        <div class="container py-3 d-flex justify-content-between flex-wrap gap-2">
+            <span>&copy; 2026 BookStore</span>
+            <span>Giao diện thân thiện cho bán sách online</span>
         </div>
     </footer>
 
