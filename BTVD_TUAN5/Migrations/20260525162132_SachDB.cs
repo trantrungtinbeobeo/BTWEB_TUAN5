@@ -7,7 +7,7 @@
 namespace BTVD_TUAN5.Migrations
 {
     /// <inheritdoc />
-    public partial class addDBbooks : Migration
+    public partial class SachDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

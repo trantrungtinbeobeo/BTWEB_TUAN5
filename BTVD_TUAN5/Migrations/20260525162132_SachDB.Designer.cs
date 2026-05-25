@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTVD_TUAN5.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    [Migration("20260525110158_addDBbooks")]
-    partial class addDBbooks
+    [Migration("20260525162132_SachDB")]
+    partial class SachDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
