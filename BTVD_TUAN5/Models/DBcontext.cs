@@ -17,6 +17,7 @@ public class DBcontext : DbContext
 
         modelBuilder.Entity<Book>()
             .Property(b => b.Price)
+            .HasColumnType("decimal(18,2)")
             .HasPrecision(18, 2);
 
         modelBuilder.Entity<Topic>().HasData(
