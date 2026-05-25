@@ -21,22 +21,13 @@ public class BooksController : Controller
             .Include(b => b.Topic)
             .ToListAsync();
 
-        var topicBookCounts = await _context.Books
-            .AsNoTracking()
-            .GroupBy(b => b.TopicId)
-            .Select(g => new { TopicId = g.Key, Count = g.Count() })
-            .ToListAsync();
-
         var topics = await _context.Topics
             .AsNoTracking()
             .OrderBy(t => t.Name)
             .Select(t => new TopicCountViewModel
             {
                 Name = t.Name,
-                Count = topicBookCounts
-                    .Where(c => c.TopicId == t.TopicId)
-                    .Select(c => c.Count)
-                    .FirstOrDefault()
+                Count = t.Books.Count()
             })
             .ToListAsync();
 
