@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BTVD_TUAN5.Migrations
 {
-    public partial class InitBookStore : Migration
+    public partial class KhoiTaoBookDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
