@@ -19,6 +19,7 @@ public class BooksController : Controller
         var books = await _context.Books
             .AsNoTracking()
             .Include(b => b.Topic)
+            .OrderBy(b => b.BookId)
             .ToListAsync();
 
         var topics = await _context.Topics
@@ -142,8 +143,3 @@ public class BooksController : Controller
     }
 }
 
-public class TopicCountViewModel
-{
-    public string Name { get; set; } = string.Empty;
-    public int Count { get; set; }
-}
