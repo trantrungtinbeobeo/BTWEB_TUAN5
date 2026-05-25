@@ -1,43 +1,55 @@
 @model IEnumerable<BTVD_TUAN5.Models.Book>
 @{
-    ViewData["Title"] = "Quản lý sách";
+    ViewData["Title"] = "Cửa hàng sách";
     var topicCounts = ViewBag.TopicCounts as IEnumerable<BTVD_TUAN5.Models.TopicCountViewModel>;
 }
 
-<h1>Danh sách sách</h1>
-<p><a class="btn btn-primary" asp-action="Create">Thêm sách</a></p>
+<section class="hero-panel mb-4">
+    <h1 class="mb-2">Khám phá thế giới sách</h1>
+    <p class="mb-0">Giao diện thân thiện, card bo tròn, hiệu ứng mượt và xem chi tiết cực nhanh.</p>
+</section>
 
-<div class="mb-3">
-    <strong>Chủ đề:</strong>
+<div class="d-flex flex-wrap gap-2 align-items-center mb-4">
+    <a class="btn btn-gradient" asp-action="Create">+ Thêm sách mới</a>
     @if (topicCounts != null)
     {
         foreach (var topic in topicCounts)
         {
-            <span class="badge bg-secondary me-2">@topic.Name (@topic.Count)</span>
+            <span class="badge rounded-pill text-bg-light border">@topic.Name (@topic.Count)</span>
         }
     }
 </div>
 
-<table class="table table-striped">
-    <thead>
-        <tr><th>Tên sách</th><th>Tác giả</th><th>Chủ đề</th><th>Giá</th><th>SL</th><th>Ảnh</th><th></th></tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>@item.Title</td><td>@item.Author</td><td>@item.Topic?.Name</td><td>@item.Price.ToString("N0")</td><td>@item.Quantity</td>
-            <td>
-                @if (!string.IsNullOrEmpty(item.ImageFileName))
-                {
-                    <img src="~/Content/ImageBooks/@item.ImageFileName" width="60" alt="@item.Title" />
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.BookId">Sửa</a> |
-                <a asp-action="Details" asp-route-id="@item.BookId">Chi tiết</a> |
-                <a asp-action="Delete" asp-route-id="@item.BookId">Xóa</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div id="bookGrid" class="book-grid">
+    @foreach (var item in Model)
+    {
+        <article class="book-card" data-title="@item.Title" data-author="@item.Author" data-topic="@item.Topic?.Name" data-price="@item.Price.ToString("N0")" data-quantity="@item.Quantity" data-link="@Url.Action("Details", "Books", new { id = item.BookId })">
+            <a class="book-card-link" asp-action="Details" asp-route-id="@item.BookId">
+                <div class="book-cover-square">
+                    @if (!string.IsNullOrEmpty(item.ImageFileName))
+                    {
+                        <img src="~/Content/ImageBooks/@item.ImageFileName" alt="@item.Title" />
+                    }
+                    else
+                    {
+                        <span class="placeholder-cover">BOOK</span>
+                    }
+                </div>
+                <div class="book-content">
+                    <h3>@item.Title</h3>
+                    <p class="author">@item.Author</p>
+                    <p class="meta">@item.Topic?.Name</p>
+                    <div class="book-bottom">
+                        <strong>@item.Price.ToString("N0") đ</strong>
+                        <span>Còn @item.Quantity</span>
+                    </div>
+                </div>
+            </a>
+        </article>
+    }
+</div>
+
+<div class="console-hint mt-4">
+    <p class="mb-1"><strong>Thêm sản phẩm nhanh bằng Console:</strong></p>
+    <code>bookConsole.addBookCard({ title: "Sách mới", author: "Bạn", topic: "Công nghệ", price: "199000", quantity: 10, image: "https://picsum.photos/400" })</code>
+</div>
