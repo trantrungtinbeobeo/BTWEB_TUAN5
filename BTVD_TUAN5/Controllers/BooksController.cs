@@ -16,9 +16,28 @@ public class BooksController : Controller
 
     public async Task<IActionResult> Index()
     {
-        var books = await _context.Books.Include(b => b.Topic).ToListAsync();
+        var books = await _context.Books
+            .AsNoTracking()
+            .Include(b => b.Topic)
+            .ToListAsync();
+
+        var topicBookCounts = await _context.Books
+            .AsNoTracking()
+            .GroupBy(b => b.TopicId)
+            .Select(g => new { TopicId = g.Key, Count = g.Count() })
+            .ToListAsync();
+
         var topics = await _context.Topics
-            .Select(t => new TopicCountViewModel { Name = t.Name, Count = t.Books.Count })
+            .AsNoTracking()
+            .OrderBy(t => t.Name)
+            .Select(t => new TopicCountViewModel
+            {
+                Name = t.Name,
+                Count = topicBookCounts
+                    .Where(c => c.TopicId == t.TopicId)
+                    .Select(c => c.Count)
+                    .FirstOrDefault()
+            })
             .ToListAsync();
 
         ViewBag.TopicCounts = topics;
@@ -29,7 +48,7 @@ public class BooksController : Controller
     {
         if (id == null) return NotFound();
 
-        var book = await _context.Books.Include(b => b.Topic).FirstOrDefaultAsync(m => m.BookId == id);
+        var book = await _context.Books.AsNoTracking().Include(b => b.Topic).FirstOrDefaultAsync(m => m.BookId == id);
         return book == null ? NotFound() : View(book);
     }
 
@@ -105,7 +124,7 @@ public class BooksController : Controller
     {
         if (id == null) return NotFound();
 
-        var book = await _context.Books.Include(b => b.Topic).FirstOrDefaultAsync(m => m.BookId == id);
+        var book = await _context.Books.AsNoTracking().Include(b => b.Topic).FirstOrDefaultAsync(m => m.BookId == id);
         return book == null ? NotFound() : View(book);
     }
 
@@ -127,7 +146,7 @@ public class BooksController : Controller
 
     private async Task PopulateTopicsDropDownList(object? selectedTopic = null)
     {
-        var topics = await _context.Topics.OrderBy(t => t.Name).ToListAsync();
+        var topics = await _context.Topics.AsNoTracking().OrderBy(t => t.Name).ToListAsync();
         ViewBag.TopicId = new SelectList(topics, "TopicId", "Name", selectedTopic);
     }
 }
